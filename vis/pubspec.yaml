@@ -1,0 +1,7 @@
+name: iclc2016_vis
+description: Core structures for Molly
+dependencies:
+  path: any
+
+  # flutter:
+    # path: ../../flutter/packages/flutter
