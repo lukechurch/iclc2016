@@ -12,7 +12,7 @@ initUI(html.Element parent, int width, int height) {
   parent.append(_svgContainer);
 }
 
-Map<int, svg.SvgElement> cache = {};
+Map<int, svg.SvgElement> idToElementMap = {};
 
 refreshDisplay() {
   if (_svgContainer == null) {
@@ -20,8 +20,8 @@ refreshDisplay() {
   }
 
   infra.circles.forEach((id, circle) {
-    if (cache.containsKey(id)) {
-      cache[id]
+    if (idToElementMap.containsKey(id)) {
+      idToElementMap[id]
         ..attributes['r'] = '${circle.radius}'
         ..attributes['cx'] = '${circle.x}'
         ..attributes['cy'] = '${circle.y}'
@@ -33,20 +33,20 @@ refreshDisplay() {
         ..attributes['cx'] = '${circle.x}'
         ..attributes['cy'] = '${circle.y}'
         ..attributes['fill'] = 'rgba(${circle.r}, ${circle.g}, ${circle.b}, ${circle.a/255.0})';
-      cache[id] = svgCircle;
+      idToElementMap[id] = svgCircle;
       _svgContainer.append(svgCircle);
     }
 
   });
 
   infra.lines.forEach((id, line) {
-    if (cache.containsKey(id)) {
-      cache[id]
+    if (idToElementMap.containsKey(id)) {
+      idToElementMap[id]
         ..attributes['x1'] = '${line.startX}'
         ..attributes['y1'] = '${line.startY}'
         ..attributes['x2'] = '${line.endX}'
         ..attributes['y2'] = '${line.endY}'
-        ..attributes['stroke-width'] = '${line.width}'
+        ..attributes['stroke-width'] = '${line.thickness}'
         ..attributes['stroke'] = 'rgba(${line.r}, ${line.g}, ${line.b}, ${line.a/255.0})';
     } else {
       svg.LineElement svgLine = new svg.LineElement()
@@ -55,9 +55,9 @@ refreshDisplay() {
         ..attributes['y1'] = '${line.startY}'
         ..attributes['x2'] = '${line.endX}'
         ..attributes['y2'] = '${line.endY}'
-        ..attributes['stroke-width'] = '${line.width}'
+        ..attributes['stroke-width'] = '${line.thickness}'
         ..attributes['stroke'] = 'rgba(${line.r}, ${line.g}, ${line.b}, ${line.a/255.0})';
-      cache[id] = svgLine;
+      idToElementMap[id] = svgLine;
       _svgContainer.append(svgLine);
     }
   });

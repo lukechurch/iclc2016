@@ -4,13 +4,13 @@ class Line {
   int startY;
   int endX;
   int endY;
-  int width;
+  int thickness;
   int r;
   int g;
   int b;
   int a;
 
-  Line(this.startX, this.startY, this.endX, this.endY, this.width, this.r, this.g, this.b, this.a);
+  Line(this.startX, this.startY, this.endX, this.endY, this.thickness, this.r, this.g, this.b, this.a);
 }
 
 class Circle {

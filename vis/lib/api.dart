@@ -7,13 +7,13 @@ import 'ui.dart';
 int addLine(
   int startX, int startY,
   int endX, int endY,
-  int width,
+  int thickness,
   int r, int g, int b, int a) {
 
   int id = allocateId();
   assert (!idExists(id));
 
-  var newLine = new Line(startX, startY, endX, endY, width, r, g, b, a);
+  var newLine = new Line(startX, startY, endX, endY, thickness, r, g, b, a);
   lines[id] = newLine;
 
   refreshDisplay();
