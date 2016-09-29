@@ -1,0 +1,86 @@
+Grammar {
+
+  Program = Statement*
+
+  Statement
+    = var identifier "=" Expression ";"               -- varDeclaration
+    |     identifier "=" Expression ";"               -- varAssignment
+    | "while" "(" Expression ")" "{" Statement* "}"   -- whileLoop
+    | ~("{") Expression ";"                           -- expression
+
+  Expression (an expression)
+    = EqualityExpression
+
+  EqualityExpression
+    = EqualityExpression "==" RelationalExpression  -- eq
+    | EqualityExpression "!=" RelationalExpression  -- neq
+    | RelationalExpression
+
+  RelationalExpression
+    = RelationalExpression "<" AdditiveExpression           -- lt
+    | RelationalExpression ">" AdditiveExpression           -- gt
+    | RelationalExpression "<=" AdditiveExpression          -- le
+    | RelationalExpression ">=" AdditiveExpression          -- ge
+    | AdditiveExpression
+
+  AdditiveExpression
+    = AdditiveExpression "+" MultiplicativeExpression -- add
+    | AdditiveExpression "-" MultiplicativeExpression -- sub
+    | MultiplicativeExpression
+
+  MultiplicativeExpression
+    = MultiplicativeExpression "*" UnaryExpression -- mul
+    | MultiplicativeExpression "/" UnaryExpression -- div
+    | MultiplicativeExpression "%" UnaryExpression -- mod
+    | UnaryExpression
+
+  UnaryExpression
+    = "-"    UnaryExpression  -- unaryMinus
+    | CallExpression          -- callExp
+    | PrimaryExpression       -- primExp
+
+  CallExpression
+    = CallExpression Arguments           -- callExpExp
+    | PrimaryExpression                  -- primExpExp
+
+  Arguments
+    = "(" ListOf<Expression, ","> ")"
+
+  PrimaryExpression
+    = identifier          -- identifier
+    | literal             -- literal
+    | "(" Expression ")"  -- paren
+
+
+  identifier (an identifier) = ~reservedWord identifierName
+  identifierName = identifierStart identifierPart*
+
+  identifierStart = letter | "$" | "_"
+  identifierPart = identifierStart | digit
+
+  reservedWord = for | var
+
+  literal = booleanLiteral | intLiteral | floatLiteral | stringLiteral
+  booleanLiteral = ("true" | "false") ~identifierPart
+  intLiteral = digit+
+  floatLiteral = digit* "." digit+
+
+  stringLiteral
+    = "\"" stringCharacterDoubleQuotes "\""
+    | "'" stringCharacterSingleQuotes "'"
+
+  stringCharacterDoubleQuotes
+    = ~("\"" | "\\" | lineTerminator) any -- nonEscaped
+    | "\\" ~(lineTerminator)              -- escaped
+
+  stringCharacterSingleQuotes
+    = ~("\"" | "\\" | lineTerminator) any -- nonEscaped
+    | "\\" ~(lineTerminator)              -- escaped
+
+  for = "for" ~identifierPart
+  var = "var" ~identifierPart
+
+  lineTerminator = "\n" | "\r"
+  lineTerminatorSequence = "\n" | "\r" ~"\n" | "\r\n"
+
+}
