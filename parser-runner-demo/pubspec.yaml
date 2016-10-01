@@ -1,0 +1,3 @@
+name: parser-runner-demo
+description: A client that sends code to the parser and receives and AST.
+dependencies:
