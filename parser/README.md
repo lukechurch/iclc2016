@@ -20,3 +20,19 @@ npm install ohm-js
 ~~~~
 node test.js
 ~~~~
+
+## Sample program
+
+```
+var x = 100;
+var y = 50;
+var radius = 10;
+while(x > 0) {
+  drawCircle(x, y, radius);
+  x = x - 10;
+}
+```
+
+```
+{program: {statements: [{variableDeclaration: {identifier: {variable: x}, value: {int: 100}}}, {variableDeclaration: {identifier: {variable: y}, value: {int: 50}}}, {variableDeclaration: {identifier: {variable: radius}, value: {int: 10}}}, {whileLoop: {condition: {binaryOperation: {operation: >, lhs: {variable: x}, rhs: {int: 0}}}, statements: [{call: {receiver: {variable: drawCircle}, args: [{variable: x}, {variable: y}, {variable: radius}]}}, {variableAssignment: {identifier: {variable: x}, value: {binaryOperation: {operation: -, lhs: {variable: x}, rhs: {int: 10}}}}}]}}]}}
+```
