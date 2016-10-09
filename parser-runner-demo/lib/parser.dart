@@ -5,7 +5,7 @@ import 'dart:convert' show UTF8, JSON;
 import 'dart:io';
 
 var host = '127.0.0.1';
-var port = 8080;
+var port = 9080;
 var path = '/generate_ast';
 var client;
 

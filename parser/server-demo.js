@@ -17,7 +17,7 @@ var semantics = grammar.createSemantics().addOperation('toAST', ast_semantics.se
 
 // Create an HTTP server
 var app = express();
-var port = 8080;
+var port = 9080;
 var path = '/generate_ast';
 
 app.use(bodyParser.json()); // support json encoded bodies
