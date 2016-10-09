@@ -13,7 +13,7 @@ var ast_semantics = require('./ast_semantics');
 // Set up the semantics for the grammar
 var contents = fs.readFileSync('grammar.ohm');
 var grammar = ohm.grammar(contents);
-var semantics = grammar.createSemantics().addOperation('toAST', ast_semantics.semantics);
+var semantics = grammar.createSemantics().addOperation(ast_semantics.operation, ast_semantics.semantics);
 
 // Create an HTTP server
 var app = express();

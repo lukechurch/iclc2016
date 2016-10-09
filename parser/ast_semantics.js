@@ -1,6 +1,7 @@
 "use strict";
 
 var ast = require('./ast_objects');
+var operation = "toAST";
 var semantics = {
   Program: function(statements) {
     return new ast.Program(statements.toAST());
@@ -132,5 +133,6 @@ var semantics = {
 };
 
 module.exports = {
-	semantics: semantics,
+  operation: operation,
+  semantics: semantics,
 };
