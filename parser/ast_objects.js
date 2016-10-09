@@ -15,7 +15,9 @@ class Program extends ASTNode {
 		for (var i in this.statements) {
 			jsonString = jsonString + this.statements[i].toJSONStringRecursive() + ",";
 		}
-		jsonString = jsonString.slice(0, -1); // remove last comma
+		if (jsonString.slice(-1) === ",") {
+			jsonString = jsonString.slice(0, -1); // remove last comma
+		}
 		jsonString = jsonString + "]}}";
  		return jsonString;
 	}
@@ -74,7 +76,9 @@ class WhileLoop extends Statement {
 		for (var i in this.statements) {
 			 jsonString = jsonString + this.statements[i].toJSONStringRecursive() + ",";
 		}
-		jsonString = jsonString.slice(0, -1); // remove last comma
+		if (jsonString.slice(-1) === ",") {
+			jsonString = jsonString.slice(0, -1); // remove last comma
+		}
 		jsonString = jsonString + "]}}";
  		return jsonString;
 	}
@@ -137,7 +141,9 @@ class Call extends Expression {
 		for (var i in this.args) {
 			jsonString = jsonString + this.args[i].toJSONStringRecursive() + ",";
 		}
-		jsonString = jsonString.slice(0, -1); // remove last comma
+		if (jsonString.slice(-1) === ",") {
+			jsonString = jsonString.slice(0, -1); // remove last comma
+		}
 		jsonString = jsonString + "]}}";
  		return jsonString;
 	}
