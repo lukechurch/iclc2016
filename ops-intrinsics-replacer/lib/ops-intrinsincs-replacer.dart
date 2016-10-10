@@ -5,9 +5,15 @@ Map correspondences = {
   "-": "intrinsics.sub",
   "*": "intrinsics.mul",
   "/": "intrinsics.div",
+  "%": "intrinsics.mod",
+  "<": "intrinsics.lt",
+  "<=": "intrinsics.lteq",
+  ">": "intrinsics.gt",
+  ">=": "intrinsics.gteq",
+  "==": "intrinsics.eq",
 };
 
-processAST(ast) {
+void processAST(ast) {
   // Walk over the AST and if coming across a "binaryOperation", replace it with
   // a "call" expression.
   if (ast is Map) {
@@ -38,5 +44,5 @@ processAST(ast) {
     for (var astNode in ast) {
       processAST(astNode);
     }
-  } else {}
+  }
 }
