@@ -1,0 +1,3 @@
+name: ops_intrinsics_replacer
+description: A library that tranforms arithmetic operations into intrinsic function calls.
+dependencies:
