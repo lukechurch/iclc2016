@@ -1,3 +1,6 @@
-name: parser_runner_demo
+name: runner
 description: A client that sends code to the parser and receives and AST.
 dependencies:
+  json_rpc_2: any
+  shelf: any
+  shelf_web_socket: any

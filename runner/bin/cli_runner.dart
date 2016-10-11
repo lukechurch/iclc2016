@@ -1,4 +1,4 @@
-import 'package:parser_runner_demo/parser.dart';
+import '../lib/parser.dart';
 import '../../exec/lib/impl.dart' as exec;
 import '../../ops-intrinsics-replacer/lib/ops-intrinsincs-replacer.dart' as deops;
 

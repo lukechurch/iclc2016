@@ -21,6 +21,9 @@ class Executive {
   }
 
   program(Map p) {
+    _trace("Starting execution");
+    _trace("$symbolTable");
+
     for (var s in p["statements"]) {
       statement(s);
     }
