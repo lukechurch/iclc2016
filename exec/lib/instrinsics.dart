@@ -11,5 +11,5 @@ gteq(x, y) => x >= y;
 eq(x, y) => x == y;
 
 rpc_proxy(name, arguments) {
-
+  print ("rpc_proxy eval: $name ($arguments)");
 }

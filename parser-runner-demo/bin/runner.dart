@@ -25,11 +25,11 @@ final trivialProgram = '''
 
 
 Future main() async {
-  await _stepped(trivialProgram);
-  // await _stress();
+  await _steppedExec(trivialProgram);
+  // await _stressExec(trivialProgram);
 }
 
-_stepped(String src) async {
+_steppedExec(String src) async {
   Stopwatch sw = new Stopwatch()..start();
 
   print ("=================== Started: ${sw.elapsed}");
@@ -42,17 +42,19 @@ _stepped(String src) async {
   print ("=================== De-opped: ${sw.elapsed}");
   var executive = new exec.Executive();
   print ("=================== Initted: ${sw.elapsed}");
-
-  var result = await executive.program(parsed['program']);
+  await executive.program(parsed['program']);
   print ("=================== Done: ${sw.elapsed}");
 }
 
 
-_stress(String src) async {
+_stressExec(String src) async {
   Stopwatch sw = new Stopwatch()..start();
 
   for (int i = 0; i < 100; i++) {
-    await parse(src);
+    var parsed = await parse(src);
+    deops.processAST(parsed);
+    var executive = new exec.Executive();
+    await executive.program(parsed['program']);
     print (sw.elapsedMilliseconds);
     sw.reset();
   }
