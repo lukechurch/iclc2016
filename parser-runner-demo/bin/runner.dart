@@ -1,5 +1,7 @@
 import 'package:parser_runner_demo/parser.dart';
 import '../../exec/lib/impl.dart' as exec;
+import '../../ops-intrinsics-replacer/lib/ops-intrinsincs-replacer.dart' as deops;
+
 import 'dart:async';
 
 final sampleProgram = '''
@@ -16,8 +18,8 @@ final trivialProgram = '''
   var y = 50;
   var radius = 10;
   drawCircle(x, y, radius);
-  x = x - 10;
-  drawCircle(x, y, radius);
+  x = x / 2;
+  drawCircle(x, y, radius + 2);
   ''';
 
 
@@ -36,8 +38,11 @@ _stepped(String src) async {
   var parsed = await parse(src);
   print (parsed);
   print ("=================== Parsed: ${sw.elapsed}");
+  deops.processAST(parsed);
+  print ("=================== De-opped: ${sw.elapsed}");
   var executive = new exec.Executive();
   print ("=================== Initted: ${sw.elapsed}");
+
   var result = await executive.program(parsed['program']);
   print ("=================== Done: ${sw.elapsed}");
 }

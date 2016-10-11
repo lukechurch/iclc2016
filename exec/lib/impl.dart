@@ -35,6 +35,12 @@ class Executive {
       case "variableDeclaration":
         variableDeclaration(statementValue);
         break;
+      case "variableAssignment":
+        variableAssignment(statementValue);
+        break;
+      case "call":
+        expression(s);
+        break;
       default:
         throw "unknown statement kind: $s";
     }
@@ -44,26 +50,46 @@ class Executive {
     String variableName = d["identifier"]["variable"];
     if (variableName == null) throw "No identifer name in assignment: $d";
 
-    var v = value(d["value"]);
+    var v = expression(d["value"]);
     symbolTable[variableName] = v;
 
     _trace("$v -> $variableName");
-    return value;
+    return v;
+  }
+
+  dynamic variableAssignment(Map a) {
+    String variableName = a["identifier"]["variable"];
+    if (variableName == null) throw "No identifer name in assignment: $a";
+
+    var v = expression(a["value"]);
+    symbolTable[variableName] = v;
+
+    _trace("$v -> $variableName");
+    return v;
   }
 
   dynamic call(Map c) {
     _trace("calling: $c");
 
     String functionName = c["receiver"]["variable"];
-    List args = c["receiver"]["args"];
+    List args = c["args"];
+
+    List evaledArgs = [];
+
+    // Eval each of the args
+    for (var arg in args) {
+      evaledArgs.add(expression(arg));
+    }
+
+    _trace("About to eval: $functionName $evaledArgs");
 
     // Patch this up into an RPC call if it's not an intrinsic
     if (!functionTable.containsKey(functionName))  {
-      args.insert(0, functionName);
-      functionName = "intrinsics.rpc_proxy";
+      var rpcProxy = functionTable["intrinsics.rpc_proxy"];
+      return rpcProxy(functionName, evaledArgs);
     }
 
-    return _callWithArgs(functionName, args);
+    return _callWithArgs(functionName, evaledArgs);
   }
 
   dynamic _callWithArgs(String name, List a) {
@@ -89,22 +115,29 @@ class Executive {
     }
   }
 
-  dynamic value(Map v) {
-    assert(v.keys.length == 1);
-    String key = v.keys.first;
+  dynamic expression(Map e) {
+    // Could be a variable, a call, or a value
+    assert(e.keys.length == 1);
+    String key = e.keys.first;
 
     switch (key) {
       case "int":
       case "float":
       case "boolean":
       case "string":
-        return v.values.first;
+        return e.values.first;
       case "variable":
-        String variableName = v.values.first;
-        return symbolTable[variableName];
+        return variableValue(e);
+      case "call":
+        return call(e.values.first);
       default:
-        throw "Unknown value kind: $v";
-    }
+        throw "Unknwon value kind $e";
+      }
+  }
+
+  dynamic variableValue(Map v) {
+    String variableName = v.values.first;
+    return symbolTable[variableName];
   }
 }
 
