@@ -42,6 +42,24 @@ main() async {
 
         return {'result': api.addCircle(x, y, radius, r, g, b, a)};
       })
+      ..registerMethod('addBezierCurve', (json_rpc.Parameters params) async {
+        int x1 = params[0].asNum;
+        int y1 = params[1].asNum;
+        int cx1 = params[2].asNum;
+        int cy1 = params[3].asNum;
+        int cx2 = params[4].asNum;
+        int cy2 = params[5].asNum;
+        int x2 = params[6].asNum;
+        int y2 = params[7].asNum;
+        int thickness = params[8].asNum;
+        int r = params[9].asInt;
+        int g = params[10].asInt;
+        int b = params[11].asInt;
+        int a = params[12].asInt;
+        print ("addBezierCurve: $x1 $y1 $cx1 $cy1 $cx2 $cy2 $x2 $y2");
+
+        return {'result': api.addBezierCurve(x1, y1, cx1, cy1, cx2, cy2, x2, y2, thickness, r, g, b, a)};
+      })
       ..registerMethod('setColour', (json_rpc.Parameters params) async {
         int id = params[0].asInt;
         int r = params[1].asInt;
@@ -64,6 +82,18 @@ main() async {
         int y = params[2].asNum;
         return {'result': api.setCircleCoordinates(id, x, y)};
       })
+      ..registerMethod('setBezierCurveCoordinates', (json_rpc.Parameters params) async {
+        int id = params[0].asInt;
+        int x1 = params[1].asNum;
+        int y1 = params[2].asNum;
+        int cx1 = params[3].asNum;
+        int cy1 = params[4].asNum;
+        int cx2 = params[5].asNum;
+        int cy2 = params[6].asNum;
+        int x2 = params[7].asNum;
+        int y2 = params[8].asNum;
+        return {'result': api.setBezierCurveCoordinates(id, x1, y1, cx1, cy1, cx2, cy2, x2, y2)};
+      })
       ..registerMethod('delete', (json_rpc.Parameters params) async {
         int id = params[0].asInt;
         return {'result': api.delete(id)};
@@ -73,6 +103,9 @@ main() async {
       })
       ..registerMethod('getLines', (json_rpc.Parameters params) async {
         return {'result': getLines()};
+      })
+      ..registerMethod('getBezierCurves', (json_rpc.Parameters params) async {
+        return {'result': getBezierCurves()};
       })
       ..registerMethod('sin', (json_rpc.Parameters params) async {
         double x = params[0].asNum;
@@ -142,6 +175,29 @@ Map getLines() {
   });
 
   return lines;
+}
+
+Map getBezierCurves() {
+  Map bezierCurves = {};
+  infra.bezierCurves.forEach((k, v) {
+    bezierCurves["$k"] = {
+      "x1" : v.x1,
+      "y1" : v.y1,
+      "cx1" : v.cx1,
+      "cy1" : v.cy1,
+      "cx2" : v.cx2,
+      "cy2" : v.cy2,
+      "x2" : v.x2,
+      "y2" : v.y2,
+      "thickness": v.thickness,
+      "r" : v.r,
+      "g" : v.g,
+      "b" : v.b,
+      "a" : v.a,
+    };
+  });
+
+  return bezierCurves;
 }
 
 

@@ -31,10 +31,28 @@ class Circle {
   Circle(this.x, this.y, this.radius, this.r, this.g, this.b, this.a);
 }
 
+class BezierCurve {
+  int x1;
+  int y1;
+  int cx1;
+  int cy1;
+  int cx2;
+  int cy2;
+  int x2;
+  int y2;
+  int thickness;
+  int r;
+  int g;
+  int b;
+  int a;
+
+  BezierCurve(this.x1, this.y1, this.cx1, this.cy1, this.cx2, this.cy2, this.x2, this.y2, this.thickness, this.r, this.g, this.b, this.a);
+}
 
 // TODO(Mariana): What's the right SVG type rep for these?
 Map<int, Circle> circles = <int, Circle>{};
 Map<int, Line> lines = <int, Line>{};
+Map<int, BezierCurve> bezierCurves = <int, BezierCurve>{};
 
 var apiClient;
 
@@ -73,4 +91,16 @@ updateModel() async {
   });
 
   lines = newLines;
+
+  Map<int, BezierCurve> newBezierCurves = <int, BezierCurve>{};
+  var bezierCurvesResult = await apiClient.sendRequest('getBezierCurves', []);
+  Map curvesMap = bezierCurvesResult['result'];
+  curvesMap.forEach((k, v) {
+    newBezierCurves[int.parse(k)] = new BezierCurve(
+      v["x1"], v["y1"], v["cx1"], v["cy1"],
+      v["cx2"], v["cy2"], v["x2"], v["y2"],
+      v["thickness"], v["r"], v["g"], v["b"], v["a"]);
+  });
+
+  bezierCurves = newBezierCurves;
 }
