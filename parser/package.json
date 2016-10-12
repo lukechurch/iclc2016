@@ -1,0 +1,20 @@
+{
+  "name": "parser",
+  "version": "0.0.2",
+  "description": "The parser for the Molly programming language.",
+  "main": "server-demo.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "ohm-js": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukechurch/iclc2016.git"
+  },
+  "license": "MIT"
+}
