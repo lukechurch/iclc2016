@@ -3,10 +3,11 @@ Grammar {
   Program = Statement*
 
   Statement
-    = var identifier "=" Expression ";"               -- varDeclaration
-    |     identifier "=" Expression ";"               -- varAssignment
-    | "while" "(" Expression ")" "{" Statement* "}"   -- whileLoop
-    | ~("{") Expression ";"                           -- expression
+    = var identifier "=" Expression ";"                -- varDeclaration
+    |     identifier "=" Expression ";"                -- varAssignment
+    | while "(" Expression ")" "{" Statement* "}"      -- whileLoop
+    | at    "(" numLiteral ")" "{" Statement* "}"      -- atBlock
+    | ~("{") Expression ";"                            -- expression
 
   Expression (an expression)
     = EqualityExpression
@@ -51,19 +52,19 @@ Grammar {
     | literal             -- literal
     | "(" Expression ")"  -- paren
 
-
   identifier (an identifier) = ~reservedWord identifierName
   identifierName = identifierStart identifierPart*
 
   identifierStart = letter | "$" | "_"
   identifierPart = identifierStart | digit
 
-  reservedWord = for | var
+  reservedWord = at | var | while
 
-  literal = booleanLiteral | intLiteral | floatLiteral | stringLiteral
+  literal = booleanLiteral | numLiteral | stringLiteral
+  numLiteral = floatLiteral | intLiteral
   booleanLiteral = ("true" | "false") ~identifierPart
-  intLiteral = digit+
   floatLiteral = digit* "." digit+
+  intLiteral = digit+
 
   stringLiteral
     = "\"" stringCharacterDoubleQuotes "\""
@@ -77,8 +78,9 @@ Grammar {
     = ~("\"" | "\\" | lineTerminator) any -- nonEscaped
     | "\\" ~(lineTerminator)              -- escaped
 
-  for = "for" ~identifierPart
+  at = "at" ~identifierPart
   var = "var" ~identifierPart
+  while = "while" ~identifierPart
 
   lineTerminator = "\n" | "\r"
   lineTerminatorSequence = "\n" | "\r" ~"\n" | "\r\n"

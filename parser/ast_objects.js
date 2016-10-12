@@ -84,6 +84,29 @@ class WhileLoop extends Statement {
     }
 }
 
+class AtBlock extends Statement {
+    constructor(time, statements) {
+        super();
+        this.time = time;
+        this.statements = statements;
+    }
+
+    toJSONStringRecursive() {
+        var jsonString =
+                "{\"atBlock\": {" +
+                        "\"time\": " + this.time.toJSONStringRecursive() + "," +
+                        "\"statements\": [";
+        for (var i in this.statements) {
+             jsonString = jsonString + this.statements[i].toJSONStringRecursive() + ",";
+        }
+        if (jsonString.slice(-1) === ",") {
+            jsonString = jsonString.slice(0, -1); // remove last comma
+        }
+        jsonString = jsonString + "]}}";
+        return jsonString;
+    }
+}
+
 class Expression extends ASTNode {
     constructor() {
         super();
@@ -215,6 +238,7 @@ module.exports = {
     VariableDeclaration: VariableDeclaration,
     VariableAssignment: VariableAssignment,
     WhileLoop: WhileLoop,
+    AtBlock: AtBlock,
     Expression: Expression,
     BinaryOperation: BinaryOperation,
     UnaryOperation: UnaryOperation,

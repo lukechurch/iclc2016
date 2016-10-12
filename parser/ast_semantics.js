@@ -19,6 +19,10 @@ var semantics = {
     return new ast.WhileLoop(condition.toAST(), statements.toAST());
   },
 
+  Statement_atBlock: function(_at, _openParen, number, _closeParen, _openBracket, statements, _closeBracket) {
+    return new ast.AtBlock(number.toAST(), statements.toAST());
+  },
+
   Statement_expression: function(expression, _semicolon) {
     return expression.toAST();
   },
