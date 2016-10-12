@@ -20,16 +20,16 @@ class Executive {
     );
   }
 
-  program(Map p) {
+  program(Map p) async {
     _trace("Starting execution");
     _trace("$symbolTable");
 
     for (var s in p["statements"]) {
-      statement(s);
+      await statement(s);
     }
   }
 
-  statement(Map s) {
+  statement(Map s) async {
     assert(s.keys.length == 1);
     String statementKind = s.keys.first;
     var statementValue = s.values.first;
@@ -42,36 +42,36 @@ class Executive {
         variableAssignment(statementValue);
         break;
       case "call":
-        expression(s);
+        await expression(s);
         break;
       default:
         throw "unknown statement kind: $s";
     }
   }
 
-  dynamic variableDeclaration(Map d) {
+  dynamic variableDeclaration(Map d) async {
     String variableName = d["identifier"]["variable"];
     if (variableName == null) throw "No identifer name in assignment: $d";
 
-    var v = expression(d["value"]);
+    var v = await expression(d["value"]);
     symbolTable[variableName] = v;
 
     _trace("$v -> $variableName");
     return v;
   }
 
-  dynamic variableAssignment(Map a) {
+  dynamic variableAssignment(Map a) async {
     String variableName = a["identifier"]["variable"];
     if (variableName == null) throw "No identifer name in assignment: $a";
 
-    var v = expression(a["value"]);
+    var v = await expression(a["value"]);
     symbolTable[variableName] = v;
 
     _trace("$v -> $variableName");
     return v;
   }
 
-  dynamic call(Map c) {
+  dynamic call(Map c) async {
     _trace("calling: $c");
 
     String functionName = c["receiver"]["variable"];
@@ -81,7 +81,7 @@ class Executive {
 
     // Eval each of the args
     for (var arg in args) {
-      evaledArgs.add(expression(arg));
+      evaledArgs.add(await expression(arg));
     }
 
     _trace("About to eval: $functionName $evaledArgs");
@@ -92,7 +92,7 @@ class Executive {
       return rpcProxy(functionName, evaledArgs);
     }
 
-    return _callWithArgs(functionName, evaledArgs);
+    return await _callWithArgs(functionName, evaledArgs);
   }
 
   dynamic _callWithArgs(String name, List a) {
@@ -118,7 +118,7 @@ class Executive {
     }
   }
 
-  dynamic expression(Map e) {
+  dynamic expression(Map e) async {
     // Could be a variable, a call, or a value
     assert(e.keys.length == 1);
     String key = e.keys.first;
@@ -132,7 +132,7 @@ class Executive {
       case "variable":
         return variableValue(e);
       case "call":
-        return call(e.values.first);
+        return await call(e.values.first);
       default:
         throw "Unknwon value kind $e";
       }

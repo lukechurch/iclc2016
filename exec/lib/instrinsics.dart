@@ -29,5 +29,7 @@ rpc_proxy(name, arguments) async {
   }
 
   var resultJson = await client.sendRequest(name, arguments);
-  return resultJson['result'];
+  var returnValue = resultJson['result'];
+  print ("Returning: $returnValue");
+  return returnValue;
 }
