@@ -25,6 +25,8 @@ main() async {
         int g = params[6].asInt;
         int b = params[7].asInt;
         int a = params[8].asInt;
+        print ("addLine: $startX $startY $endX $endY");
+
         return {'result': api.addLine(startX, startY, endX, endY, thickness, r, g, b, a)};
       })
       ..registerMethod('addCircle', (json_rpc.Parameters params) async {
@@ -35,6 +37,8 @@ main() async {
         int g = params[4].asInt;
         int b = params[5].asInt;
         int a = params[6].asInt;
+        print ("addCirclr: $x $y $radius");
+
         return {'result': api.addCircle(x, y, radius, r, g, b, a)};
       })
       ..registerMethod('setColour', (json_rpc.Parameters params) async {
@@ -95,7 +99,7 @@ main() async {
 Map getCircles() {
   Map circles = {};
   infra.circles.forEach((k, v) {
-    circles[k] = {
+    circles["$k"] = {
       "x" : v.x,
       "y" : v.y,
       "radius" : v.radius,
@@ -112,11 +116,12 @@ Map getCircles() {
 Map getLines() {
   Map lines = {};
   infra.lines.forEach((k, v) {
-    lines[k] = {
+    lines["$k"] = {
       "startX" : v.startX,
       "startY" : v.startY,
       "endX" : v.endX,
       "endY" : v.endY,
+      "thickness": v.thickness,
       "r" : v.r,
       "g" : v.g,
       "b" : v.b,

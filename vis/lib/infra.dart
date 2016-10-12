@@ -33,26 +33,40 @@ class Circle {
 
 
 // TODO(Mariana): What's the right SVG type rep for these?
-final Map<int, Circle> circles = <int, Circle>{};
-final Map<int, Line> lines = <int, Line>{};
+Map<int, Circle> circles = <int, Circle>{};
+Map<int, Line> lines = <int, Line>{};
 
-dynamic getObject(int id) {
-  assert(idExists(id));
+var apiClient;
 
-  if (circles.containsKey(id)) return circles[id];
-  return lines[id];
+setupApiClient() {
+  Uri serverURL = Uri.parse('ws://localhost:${config.API_SERVER_PORT}');
+  var socket = new HtmlWebSocketChannel.connect(serverURL);
+  apiClient = new json_rpc.Client(socket)..listen();
 }
 
-deleteObject(int id) {
-  assert(idExists(id));
+updateModel() async {
+  if (apiClient == null) {
+    print ("apiClient is null, skipping update");
+    return;
+  }
 
-  if (circles.containsKey(id)) circles.remove(id);
-  if (lines.containsKey(id)) lines.remove(id);
+  var result = await apiClient.sendRequest('getCircles', []);
+  Map circlesMap = result['result'];
+  Map<int, Circle> newCircles = <int, Circle>{};
+  circlesMap.forEach((k, v) {
+    newCircles[int.parse(k)] = new Circle(
+      v["x"], v["y"], v["radius"], v["r"], v["g"], v["b"], v["a"]);
+  });
+  circles = newCircles;
+
+  Map<int, Line> newLines = <int, Line>{};
+  var linesResult = await apiClient.sendRequest('getLines', []);
+  Map linesMap = linesResult['result'];
+  linesMap.forEach((k, v) {
+    newLines[int.parse(k)] = new Line(
+      v["startX"], v["startY"], v["endX"], v["endY"],
+      v["thickness"], v["r"], v["g"], v["b"], v["a"]);
+  });
+
+  lines = newLines;
 }
-
-int lastId = 0;
-int allocateId() {
-  return ++lastId;
-}
-
-bool idExists(int id) => circles.containsKey(id) || lines.containsKey(id);
