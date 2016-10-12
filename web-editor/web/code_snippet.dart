@@ -280,7 +280,7 @@ class CodeSnippetUI {
     DivElement setupHeader = new DivElement()..classes.add('setup-header');
     setupCodeArea.append(setupHeader);
 
-    setupHeader.append(new DivElement()
+    DivElement refreshButton = new DivElement()
       ..classes.add('refresh-button')
       ..appendHtml("""
           <svg fill="#000000" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -292,12 +292,27 @@ class CodeSnippetUI {
           ..text = 'Update setup'
           ..style.lineHeight = '20px'
           ..style.verticalAlign = 'top')
-      ..onClick.listen((MouseEvent event) => codeSnippet.runSetupCode()));
+      ..onClick.listen((MouseEvent event) => codeSnippet.runSetupCode());
+    setupHeader.append(refreshButton);
 
     // Add the code area
     setupCodeArea.append(new DivElement()
       ..classes.add('code')
       ..attributes["contentEditable"] = "true"
+      ..onKeyDown.listen((KeyboardEvent event) { // on shift+SPACE update the code
+        if (event.shiftKey) {
+          switch (new String.fromCharCode(event.which).toLowerCase()) {
+            case ' ':
+              event.preventDefault();
+              refreshButton.click();
+              refreshButton.classes.add('activate'); // Add the activate class (which simulates a click in the UI)
+              break;
+          }
+        }
+      })
+      ..onKeyUp.listen((KeyboardEvent event) { // Remove the activate class (which simulates a click in the UI)
+        refreshButton.classes.remove('activate');
+      })
       ..onInput.listen((Event event) => codeSnippet.updateSetupCode()));
   }
 
@@ -350,10 +365,10 @@ class CodeSnippetUI {
     timedCodeArea.append(new DivElement()
       ..classes.add('code')
       ..attributes["contentEditable"] = "true"
-      ..onKeyDown.listen((KeyboardEvent event) { // on ctrl+R patch the code
-        if (event.ctrlKey || event.metaKey) {
+      ..onKeyDown.listen((KeyboardEvent event) { // on shift+SPACE patch the code
+        if (event.shiftKey) {
           switch (new String.fromCharCode(event.which).toLowerCase()) {
-            case 'r': // Run all local
+            case ' ':
               event.preventDefault();
               refreshButton.click();
               refreshButton.classes.add('activate'); // Add the activate class (which simulates a click in the UI)
