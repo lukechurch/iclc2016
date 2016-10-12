@@ -50,5 +50,8 @@ Each server below must be started in a different terminal window. All commands a
 
 ## Start coding
 
-
 Go to [localhost:8080](http://localhost:8080) to write code in Molly, and see the visualisation created at [localhost:8081](http://localhost:8081/test.html).
+
+## Development environment
+
+A substantial part of the code is written in Dart. If you've written Java before, it should be very easy to pick up. To get code completion and syntax highlighting, you can use the [Atom editor](https://atom.io/) with the [dartlang](https://atom.io/packages/dartlang) package.
