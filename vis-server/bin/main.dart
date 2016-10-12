@@ -5,7 +5,8 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import '../lib/api.dart' as api;
 import '../lib/infra.dart' as infra;
-import '../../config.dart' as config;
+import 'package:iclc_config/config.dart' as config;
+
 
 var server;
 

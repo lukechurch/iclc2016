@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'parser.dart' as parser;
-import '../../exec/lib/impl.dart' as exec;
-import '../../ops-intrinsics-replacer/lib/ops-intrinsincs-replacer.dart' as deops;
-
+import 'package:iclc_exec/impl.dart'as exec;
+import 'package:ops_intrinsics_replacer/ops-intrinsincs-replacer.dart' as deops;
 
 class LiveRunner {
   exec.Executive executive;

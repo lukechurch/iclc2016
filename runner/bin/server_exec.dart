@@ -4,7 +4,7 @@ import 'package:json_rpc_2/json_rpc_2.dart' as json_rpc;
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import '../lib/live_runner.dart';
-import '../../config.dart' as config;
+import 'package:iclc_config/config.dart' as config;
 
 
 var server;

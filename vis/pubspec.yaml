@@ -3,6 +3,10 @@ description: Core structures for Molly
 dependencies:
   browser: '>=0.10.0 <0.11.0'
   path: any
+  json_rpc_2: any
+  web_socket_channel: any
+  iclc_config:
+    path: ../config
 
   # flutter:
     # path: ../../flutter/packages/flutter

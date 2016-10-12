@@ -4,7 +4,8 @@
 import 'dart:async';
 import 'dart:convert' show UTF8, JSON;
 import 'dart:io';
-import '../../config.dart' as config;
+import 'package:iclc_config/config.dart' as config;
+
 
 var host = '127.0.0.1';
 var port = config.PARSER_SERVER_PORT;
