@@ -1,5 +1,4 @@
 import 'infra.dart';
-import 'ui.dart';
 
 // This file contains the public methods of the visulisation microservice
 
@@ -16,8 +15,6 @@ int addLine(
   var newLine = new Line(startX, startY, endX, endY, thickness, r, g, b, a);
   lines[id] = newLine;
 
-  refreshDisplay();
-
   return id;
 }
 
@@ -30,8 +27,6 @@ int addCircle(
 
   var newCircle = new Circle(x, y, radius, r, g, b, a);
   circles[id] = newCircle;
-
-  refreshDisplay();
 
   return id;
 }
@@ -47,8 +42,6 @@ bool setColour(int id,
     obj.g = g;
     obj.b = b;
     obj.a = a;
-
-    refreshDisplay();
 
     return true;
 }
@@ -68,8 +61,6 @@ bool setLineCoordinates(int id,
     obj.endX = endX;
     obj.endY = endY;
 
-    refreshDisplay();
-
     return true;
 }
 
@@ -84,8 +75,6 @@ bool setCircleCoordinates(int id, int x, int y) {
     obj.x = x;
     obj.y = y;
 
-    refreshDisplay();
-
     return true;
 }
 
@@ -95,8 +84,6 @@ bool delete(int id) {
   if (!idExists(id)) return false;
 
   bool deleted = deleteObject(id);
-
-  refreshDisplay();
 
   return deleted;
 }

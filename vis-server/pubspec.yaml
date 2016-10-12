@@ -1,0 +1,6 @@
+name: vis_server
+description: A client that implements the API server
+dependencies:
+  json_rpc_2: any
+  shelf: any
+  shelf_web_socket: any
