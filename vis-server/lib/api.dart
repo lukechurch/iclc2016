@@ -31,6 +31,22 @@ int addCircle(
   return id;
 }
 
+/// Create a new bezier curve, and return a handle to the curve
+int addBezierCurve(
+  int x1, int y1, int cx1, int cy1,
+  int cx2, int cy2, int x2, int y2,
+  int thickness,
+  int r, int g, int b, int a) {
+  int id = allocateId();
+  assert (!idExists(id));
+
+  var newBezierCurve = new BezierCurve(x1, y1, cx1, cy1, cx2, cy2, x2, y2, thickness, r, g, b, a);
+  bezierCurves[id] = newBezierCurve;
+
+  return id;
+}
+
+
 /// Set the colour of a handle
 bool setColour(int id,
   int r, int g, int b, int a) {
@@ -78,6 +94,27 @@ bool setCircleCoordinates(int id, int x, int y) {
     return true;
 }
 
+/// Set the coordinates of a bezier curve
+bool setBezierCurveCoordinates(int id,
+  int x1, int y1, int cx1, int cy1,
+  int cx2, int cy2, int x2, int y2) {
+
+  if (!idExists(id)) return false;
+
+  var obj = getObject(id);
+  if (obj is! BezierCurve) return false;
+
+  obj.x1 = x1;
+  obj.y1 = y1;
+  obj.cx1 = cx1;
+  obj.cy1 = cy1;
+  obj.cx2 = cx2;
+  obj.cy2 = cy2;
+  obj.x2 = x2;
+  obj.y2 = y2;
+
+  return true;
+}
 
 /// Detele the element associated with a handle
 bool delete(int id) {

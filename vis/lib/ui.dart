@@ -66,6 +66,26 @@ refreshDisplay() {
     }
   });
 
+  infra.bezierCurves.forEach((id, curve) {
+    idsToRemove.remove(id);
+    if (idToElementMap.containsKey(id)) {
+      idToElementMap[id]
+        ..attributes['d'] = 'M${curve.x1} ${curve.y1} C${curve.cx1} ${curve.cy1}, ${curve.cx2} ${curve.cy2}, ${curve.x2} ${curve.y2}'
+        ..attributes['stroke-width'] = '${curve.thickness}'
+        ..attributes['stroke'] = 'rgba(${curve.r}, ${curve.g}, ${curve.b}, ${curve.a/255.0})'
+        ..attributes['fill'] = 'none';
+    } else {
+      svg.PathElement svgPath = new svg.PathElement()
+        ..attributes['id'] = '$id'
+        ..attributes['d'] = 'M${curve.x1} ${curve.y1} C${curve.cx1} ${curve.cy1}, ${curve.cx2} ${curve.cy2}, ${curve.x2} ${curve.y2}'
+        ..attributes['stroke-width'] = '${curve.thickness}'
+        ..attributes['stroke'] = 'rgba(${curve.r}, ${curve.g}, ${curve.b}, ${curve.a/255.0})'
+        ..attributes['fill'] = 'none';;
+      idToElementMap[id] = svgPath;
+      _svgContainer.append(svgPath);
+    }
+  });
+
   for (int id in idsToRemove) {
     var element = idToElementMap.remove(id);
     _svgContainer.nodes.remove(element);
