@@ -36,10 +36,10 @@ class Executive {
 
     switch (statementKind) {
       case "variableDeclaration":
-        variableDeclaration(statementValue);
+        await variableDeclaration(statementValue);
         break;
       case "variableAssignment":
-        variableAssignment(statementValue);
+        await variableAssignment(statementValue);
         break;
       case "call":
         await expression(s);
