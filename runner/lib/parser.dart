@@ -1,11 +1,13 @@
+
 // TODO: Replace the implementation of parse with a JSON-RPC call
 
 import 'dart:async';
 import 'dart:convert' show UTF8, JSON;
 import 'dart:io';
+import '../../config.dart' as config;
 
 var host = '127.0.0.1';
-var port = 9080;
+var port = config.PARSER_SERVER_PORT;
 var path = '/generate_ast';
 var client;
 

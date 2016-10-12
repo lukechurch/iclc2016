@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:json_rpc_2/json_rpc_2.dart' as json_rpc;
 import 'package:web_socket_channel/io.dart';
+import '../../config.dart' as config;
 
 json_rpc.Client client;
 
@@ -17,7 +18,7 @@ drawCircle(x, y, radius + 2);
 
 // Server that squares a number and returns it through RPC.
 main() async {
-  Uri serverURL = Uri.parse('ws://localhost:4321');
+  Uri serverURL = Uri.parse('ws://localhost:${config.EXECUTION_SERVER_WS_PORT}');
   var socket = new IOWebSocketChannel.connect(serverURL);
   client = new json_rpc.Client(socket)
     ..listen();
