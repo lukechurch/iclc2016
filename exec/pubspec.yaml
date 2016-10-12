@@ -1,3 +1,8 @@
 name: iclc_exec
 description: A basic interpretter
 dependencies:
+  json_rpc_2: any
+  shelf: any
+  shelf_web_socket: any
+  iclc_config:
+    path: ../config

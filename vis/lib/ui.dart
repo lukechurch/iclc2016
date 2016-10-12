@@ -19,7 +19,10 @@ refreshDisplay() {
     return;
   }
 
+  List<int> idsToRemove = idToElementMap.keys.toList();
+
   infra.circles.forEach((id, circle) {
+    idsToRemove.remove(id);
     if (idToElementMap.containsKey(id)) {
       idToElementMap[id]
         ..attributes['r'] = '${circle.radius}'
@@ -40,6 +43,7 @@ refreshDisplay() {
   });
 
   infra.lines.forEach((id, line) {
+    idsToRemove.remove(id);
     if (idToElementMap.containsKey(id)) {
       idToElementMap[id]
         ..attributes['x1'] = '${line.startX}'
@@ -61,4 +65,9 @@ refreshDisplay() {
       _svgContainer.append(svgLine);
     }
   });
+
+  for (int id in idsToRemove) {
+    var element = idToElementMap.remove(id);
+    _svgContainer.nodes.remove(element);
+  }
 }

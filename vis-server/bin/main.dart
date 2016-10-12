@@ -1,5 +1,6 @@
 import 'dart:io' as io;
 import 'dart:math' as math;
+import 'dart:convert';
 import 'package:json_rpc_2/json_rpc_2.dart' as json_rpc;
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -16,11 +17,11 @@ main() async {
 
     server = new json_rpc.Server(webSocketChannel)
       ..registerMethod('addLine', (json_rpc.Parameters params) async {
-        int startX = params[0].asInt;
-        int startY = params[1].asInt;
-        int endX = params[2].asInt;
-        int endY = params[3].asInt;
-        int thickness = params[4].asInt;
+        int startX = params[0].asNum;
+        int startY = params[1].asNum;
+        int endX = params[2].asNum;
+        int endY = params[3].asNum;
+        int thickness = params[4].asNum;
         int r = params[5].asInt;
         int g = params[6].asInt;
         int b = params[7].asInt;
@@ -30,9 +31,9 @@ main() async {
         return {'result': api.addLine(startX, startY, endX, endY, thickness, r, g, b, a)};
       })
       ..registerMethod('addCircle', (json_rpc.Parameters params) async {
-        int x = params[0].asInt;
-        int y = params[1].asInt;
-        int radius = params[2].asInt;
+        int x = params[0].asNum;
+        int y = params[1].asNum;
+        int radius = params[2].asNum;
         int r = params[3].asInt;
         int g = params[4].asInt;
         int b = params[5].asInt;
@@ -51,16 +52,16 @@ main() async {
       })
       ..registerMethod('setLineCoordinates', (json_rpc.Parameters params) async {
         int id = params[0].asInt;
-        int startX = params[1].asInt;
-        int startY = params[2].asInt;
-        int endX = params[3].asInt;
-        int endY = params[4].asInt;
+        int startX = params[1].asNum;
+        int startY = params[2].asNum;
+        int endX = params[3].asNum;
+        int endY = params[4].asNum;
         return {'result': api.setLineCoordinates(id, startX, startY, endX, endY)};
       })
       ..registerMethod('setCircleCoordinates', (json_rpc.Parameters params) async {
         int id = params[0].asInt;
-        int x = params[1].asInt;
-        int y = params[2].asInt;
+        int x = params[1].asNum;
+        int y = params[2].asNum;
         return {'result': api.setCircleCoordinates(id, x, y)};
       })
       ..registerMethod('delete', (json_rpc.Parameters params) async {
@@ -92,8 +93,19 @@ main() async {
       ..registerMethod('random', (json_rpc.Parameters params) async {
         return {'result': random()};
       })
+      ..registerMethod('clear', (json_rpc.Parameters params) async {
+        clear();
+        return {'result': "ok"};
+      })
       ..listen();
   }), io.InternetAddress.LOOPBACK_IP_V4, config.API_SERVER_PORT);
+}
+
+clear() {
+  print ("clearing lines: ${infra.lines.length} circles: ${infra.circles.length}");
+  infra.lines.clear();
+  infra.circles.clear();
+  print ("lines: ${infra.lines.length} circles: ${infra.circles.length}");
 }
 
 Map getCircles() {
@@ -131,6 +143,8 @@ Map getLines() {
 
   return lines;
 }
+
+
 
 double sin(double x) => math.sin(x);
 double cos(double x) => math.cos(x);

@@ -16,6 +16,17 @@ main() async {
     ui.refreshDisplay();
   });
 
+  html.document.onKeyDown.listen((html.KeyboardEvent event) async {
+        switch (new String.fromCharCode(event.which).toLowerCase()) {
+          case 'c': // clear
+            print ("clearing");
+            await infra.clear();
+            await infra.updateModel();
+            ui.refreshDisplay();
+            break;
+      }
+    });
+
 
   //
   // // These calls should be done by the client calling the API service
