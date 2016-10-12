@@ -44,6 +44,10 @@ setupApiClient() {
   apiClient = new json_rpc.Client(socket)..listen();
 }
 
+clear() async {
+  await apiClient.sendRequest('clear', []);
+}
+
 updateModel() async {
   if (apiClient == null) {
     print ("apiClient is null, skipping update");
