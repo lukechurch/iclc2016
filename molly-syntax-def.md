@@ -60,7 +60,7 @@ Adds a new circle on the screen. Returns the `id` of the line.
 ---
 
 ```
-bool setColour(int id, int r, int g, int b, int a);
+bool setColour(int id, int r, int g, int b, int a)
 ```
 
 Sets the colour of the shape with the given `id`.
