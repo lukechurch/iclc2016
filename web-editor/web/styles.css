@@ -1,0 +1,188 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  background-color: #F9F9F9;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+#add-button {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 37px;
+  margin-right: 40px;
+  z-index: 900;
+}
+
+.plus-button {
+  fill: #FF8900;
+  background: none;
+  border: none;
+  transition: all 0.2s ease 0s;
+}
+
+.plus-button:hover {
+  fill: #CF6F00;
+}
+
+.plus-button:active {
+  fill: #824600;
+}
+
+button {
+  outline: none;
+}
+
+.code-snippet-container {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  background: white;
+  padding: 4px;
+  padding-top: 32px;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
+}
+
+.top-left, .top-right, .bottom-left, .bottom-right {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+.top-left {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+.top-right {
+  top: 0;
+  right: 0;
+  cursor: nesw-resize;
+}
+.bottom-left {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}
+.bottom-right {
+  bottom: 0;
+  right: 0;
+  cursor: nwse-resize;
+}
+
+.move-control {
+  cursor: move;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 28px;
+  background: #DEDEDE;
+}
+
+.remove-button {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  fill: #696969;
+  cursor: pointer;
+}
+
+.code-container {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  height: 100%;
+}
+
+.code-area {
+  flex: 1 1 auto;
+  height: 100%;
+  position: relative;
+}
+
+.setup-header {
+  display: inline-block;
+  position: absolute;
+  top: -28px;
+  height: 20px;
+}
+
+.timer-area {
+  flex: 1 1 auto;
+  height: 100%;
+  position: relative;
+}
+
+.timer-header {
+  display: inline-block;
+  position: absolute;
+  top: -28px;
+}
+
+.timer-input {
+  width: 50px;
+  margin: 0 4px;
+  border: none;
+  border-bottom: 1px solid #696969;
+  text-align: center;
+  background: none;
+}
+
+.separator {
+  position: relative;
+}
+
+.separator.vertical {
+  height: 100%;
+  padding: 0 6px;
+  cursor:ew-resize;
+}
+
+.separator.vertical .line {
+  width: 1px;
+  height: 100%;
+  background-color: #696969;
+}
+
+.code {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  font-family: monospace;
+  overflow: scroll;
+}
+
+.refresh-button {
+  fill: #696969;
+  background: none;
+  border: none;
+  transition: all 0.2s ease 0s;
+  cursor: pointer;
+  height: 20px;
+}
+
+.refresh-button:hover {
+  background: rgba(0, 0, 0, 0.10);
+}
+
+.refresh-button:active,
+.refresh-button.activate {
+  background: rgba(0, 0, 0, 0.25)
+}
+
+.notification-code-executed {
+    -webkit-animation: glow .1s 2 alternate;
+}
+
+@-webkit-keyframes glow {
+    to {
+        box-shadow: 0px 0px 15px 0px rgba(28,138,44,0.75);
+    }
+}
