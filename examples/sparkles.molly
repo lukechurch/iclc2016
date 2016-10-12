@@ -1,0 +1,7 @@
+x = 125;
+y = 250;
+
+max = 500;
+xx = 10 + max * random() * random() * random();
+yy = 10 + max * random() * random() * random();
+addLine(x, y, xx, yy, 2, 200, 0, 0, 10);
