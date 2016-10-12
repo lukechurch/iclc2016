@@ -1,0 +1,15 @@
+/// ========== Setup 
+x = 150;
+y = 150;
+
+/// ========== Body
+step = 25;
+halfStep = step / 2;
+
+nextX = x - halfStep + step * random();
+nextY = y - halfStep + step * random();
+
+addLine(x, y, nextX, nextY, 2, 255, 0, 0, 100);
+
+x = nextX;
+y = nextY;
