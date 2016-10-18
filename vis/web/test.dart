@@ -8,7 +8,7 @@ import 'package:iclc2016_vis/infra.dart' as infra;
 
 main() async {
   // This should be done by the UI interface
-  ui.initUI(html.querySelector('#visualisation-container'), 1000, 500);
+  ui.initUI(html.querySelector('#visualisation-container'), 1000, 900);
   infra.setupApiClient();
 
   new Timer.periodic(new Duration(milliseconds:100), (_) async {
