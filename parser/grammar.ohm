@@ -5,7 +5,7 @@ Grammar {
   Statement
     = var identifier "=" Expression ";"               -- varDeclaration
     |     identifier "=" Expression ";"               -- varAssignment
-    | "while" "(" Expression ")" "{" Statement* "}"   -- whileLoop
+    | while "(" Expression ")" "{" Statement* "}"     -- whileLoop
     | ~("{") Expression ";"                           -- expression
 
   Expression (an expression)
@@ -58,12 +58,13 @@ Grammar {
   identifierStart = letter | "$" | "_"
   identifierPart = identifierStart | digit
 
-  reservedWord = for | var
+  reservedWord = while | var
 
-  literal = booleanLiteral | intLiteral | floatLiteral | stringLiteral
+  literal = booleanLiteral | numLiteral | stringLiteral
+  numLiteral = floatLiteral | intLiteral
   booleanLiteral = ("true" | "false") ~identifierPart
-  intLiteral = digit+
   floatLiteral = digit* "." digit+
+  intLiteral = digit+
 
   stringLiteral
     = "\"" stringCharacterDoubleQuotes "\""
@@ -77,7 +78,7 @@ Grammar {
     = ~("\"" | "\\" | lineTerminator) any -- nonEscaped
     | "\\" ~(lineTerminator)              -- escaped
 
-  for = "for" ~identifierPart
+  while = "while" ~identifierPart
   var = "var" ~identifierPart
 
   lineTerminator = "\n" | "\r"
