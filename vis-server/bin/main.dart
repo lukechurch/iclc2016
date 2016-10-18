@@ -142,6 +142,7 @@ clear() {
   print ("clearing lines: ${infra.lines.length} circles: ${infra.circles.length}");
   infra.lines.clear();
   infra.circles.clear();
+  infra.bezierCurves.clear();
   print ("lines: ${infra.lines.length} circles: ${infra.circles.length}");
 }
 
