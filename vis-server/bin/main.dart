@@ -123,6 +123,10 @@ main() async {
         double x = params[0].asNum;
         return {'result': sqrt(x)};
       })
+      ..registerMethod('floor', (json_rpc.Parameters params) async {
+        double x = params[0].asNum;
+        return {'result': floor(x)};
+      })
       ..registerMethod('random', (json_rpc.Parameters params) async {
         return {'result': random()};
       })
@@ -206,6 +210,7 @@ double sin(double x) => math.sin(x);
 double cos(double x) => math.cos(x);
 double tan(double x) => math.tan(x);
 double sqrt(double x) => math.sqrt(x);
+int floor(double x) => x.floor();
 
 math.Random _random = new math.Random(10);
 double random() => _random.nextDouble();
